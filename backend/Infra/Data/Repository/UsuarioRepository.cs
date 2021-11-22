@@ -22,5 +22,12 @@ namespace backend.Infra.Data.Repository
         {
             return _dbContext.Set<Usuario>().Include(u => u.Pessoa).Include(p => p.Pessoa.TipoPessoa).ToList().Find(usuario => usuario.Id == id);
         }
+
+        public Usuario ValidarCredenciais(string email, string senha)
+        {
+            return _dbContext.Set<Usuario>().Include(u => u.Pessoa).Include(p => p.Pessoa.TipoPessoa)
+                .Where(usuario => usuario.Email.ToLower() == email.ToLower() && usuario.Senha.ToLower() == senha.ToLower())
+                .FirstOrDefault();
+        }
     }
 }

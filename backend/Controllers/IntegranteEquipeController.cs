@@ -3,6 +3,7 @@ using backend.Domain.Interfaces;
 using backend.Dtos;
 using backend.Service.Services;
 using backend.Service.Validators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("/integrantes-equipe/{idEquipe}")]
+        [Authorize]
         public ActionResult<IntegrantesEquipeDto> GetAllMembers(long idEquipe)
         {
             return integranteEquipeService.GetAllMembers(idEquipe);
@@ -27,11 +29,13 @@ namespace backend.Controllers
 
 
         [HttpGet]
+        [Authorize]
         public ActionResult<IEnumerable<IntegranteEquipe>> GetAll()
         {
             return integranteEquipeService.Get().ToList();
         }
         [HttpGet("{id}")]
+        [Authorize]
         public ActionResult<IntegranteEquipe> GetById(long id)
         {
             if (ModelState.IsValid)
@@ -41,6 +45,7 @@ namespace backend.Controllers
             return BadRequest();
         }
         [HttpPost]
+        [Authorize]
         public void Post([FromBody] IntegranteEquipe integranteEquipeModel)
         {
             if (ModelState.IsValid)
@@ -49,6 +54,7 @@ namespace backend.Controllers
             }
         }
         [HttpPut("{id}")]
+        [Authorize]
         public void Put(long id, [FromBody] IntegranteEquipe integranteEquipeModel)
         {
             if (id <= 0)
@@ -65,6 +71,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public void Delete(long id)
         {
             if (id <= 0)

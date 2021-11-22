@@ -1,6 +1,7 @@
 ﻿using backend.Domain.Entites;
 using backend.Domain.Interfaces;
 using backend.Service.Validators;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,11 +18,13 @@ namespace backend.Controllers
             this.setorService = _setorService;
         }
         [HttpGet]
+        [Authorize]
         public ActionResult<IEnumerable<Setor>> GetAll()
         {
             return setorService.Get().ToList();
         }
         [HttpGet("{id}")]
+        [Authorize]
         public ActionResult<Setor> GetById(long id)
         {
             if (ModelState.IsValid)
@@ -31,6 +34,7 @@ namespace backend.Controllers
             return BadRequest();
         }
         [HttpPost]
+        [Authorize]
         public void Post([FromBody] Setor setorModel)
         {
             if (ModelState.IsValid)
@@ -39,6 +43,7 @@ namespace backend.Controllers
             }
         }
         [HttpPut("{id}")]
+        [Authorize]
         public void Put(long id, [FromBody] Setor setorModel)
         {
             if (id <= 0)
@@ -54,6 +59,7 @@ namespace backend.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public void Delete(long id)
         {
             if (id <= 0)
