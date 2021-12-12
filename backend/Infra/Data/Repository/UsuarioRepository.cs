@@ -38,7 +38,7 @@ namespace backend.Infra.Data.Repository
 
         public IEnumerable<Usuario> GetPorEmail(string email)
         {
-            return _dbContext.Usuarios.Where(u => u.Email == email);
+            return _dbContext.Usuarios.Where(u => u.Email == email).Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa);
         }
     }
 }
