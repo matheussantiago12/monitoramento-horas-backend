@@ -102,6 +102,7 @@ namespace backend
             app.UseAuthorization();
 
             app.UseCors(x => x
+                .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader()
                 .SetIsOriginAllowed(origin => true)

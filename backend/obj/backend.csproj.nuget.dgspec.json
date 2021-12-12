@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor\\monitoramento-horas-backend\\backend\\backend.csproj": {}
+    "C:\\Users\\Gustavo\\Source\\Repos\\monitoramento-horas-backend\\backend\\backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor\\monitoramento-horas-backend\\backend\\backend.csproj": {
+    "C:\\Users\\Gustavo\\Source\\Repos\\monitoramento-horas-backend\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor\\monitoramento-horas-backend\\backend\\backend.csproj",
+        "projectUniqueName": "C:\\Users\\Gustavo\\Source\\Repos\\monitoramento-horas-backend\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor\\monitoramento-horas-backend\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\maria\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor\\monitoramento-horas-backend\\backend\\obj\\",
+        "projectPath": "C:\\Users\\Gustavo\\Source\\Repos\\monitoramento-horas-backend\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\Gustavo\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Gustavo\\Source\\Repos\\monitoramento-horas-backend\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\maria\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Gustavo\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -99,7 +99,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
         }
       }
     }
