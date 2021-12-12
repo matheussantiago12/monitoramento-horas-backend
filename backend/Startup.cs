@@ -65,6 +65,9 @@ namespace backend
             services.AddScoped<IRepository<Rastreamento>, RastreamentoRepository>();
             services.AddTransient<IService<Rastreamento>, RastreamentoService>();
 
+            services.AddScoped<RastreamentoRepository, RastreamentoRepository>();
+            services.AddTransient<RastreamentoService, RastreamentoService>();
+
             services.AddScoped<IRepository<Setor>, SetorRepository>();
             services.AddTransient<IService<Setor>, SetorService>();
 
@@ -98,7 +101,11 @@ namespace backend
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors();
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
 
             app.UseEndpoints(endpoints =>
             {

@@ -12,6 +12,8 @@ namespace backend.Domain.Entites
         public string Cargo { get; set; }
         [Column("horas_trabalho_diario")]
         public decimal HorasTrabalhoDiario { get; set; }
+        [Column("equipe")]
+        public Equipe Equipe { get; set; }
         [Column("tipo_pessoa_id")]
         public long TipoPessoaId { get; set; }
         public Setor TipoPessoa { get; set; }

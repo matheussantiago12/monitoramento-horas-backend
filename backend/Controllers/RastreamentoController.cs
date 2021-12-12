@@ -1,47 +1,53 @@
 ﻿using backend.Domain.Entites;
 using backend.Domain.Interfaces;
+using backend.Service.Services;
 using backend.Service.Validators;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace backend.Controllers
 {
-    [Route("api/rastreamento")]
+    [Route("api/Rastreamento")]
     [ApiController]
     public class RastreamentoController : Controller
     {
-        private readonly IService<Rastreamento> rastreamentoService;
-        public RastreamentoController(IService<Rastreamento> _rastreamentoService)
+        private readonly RastreamentoService _rastreamentoService;
+        public RastreamentoController(RastreamentoService rastreamentoService)
         {
-            this.rastreamentoService = _rastreamentoService;
+            _rastreamentoService = rastreamentoService;
         }
+
         [HttpGet]
         [Authorize]
         public ActionResult<IEnumerable<Rastreamento>> GetAll()
         {
-            return rastreamentoService.Get().ToList();
+            return _rastreamentoService.Get().ToList();
         }
+
         [HttpGet("{id}")]
         [Authorize]
         public ActionResult<Rastreamento> GetById(long id)
         {
             if (ModelState.IsValid)
             {
-                return rastreamentoService.Get(id);
+                return _rastreamentoService.Get(id);
             }
             return BadRequest();
         }
+
         [HttpPost]
         [Authorize]
         public void Post([FromBody] Rastreamento rastreamentoModel)
         {
             if (ModelState.IsValid)
             {
-                rastreamentoService.Post<RastreamentoValidator>(rastreamentoModel);
+                _rastreamentoService.Post<RastreamentoValidator>(rastreamentoModel);
             }
         }
+
         [HttpPut("{id}")]
         [Authorize]
         public void Put(long id, [FromBody] Rastreamento rastreamentoModel)
@@ -51,13 +57,12 @@ namespace backend.Controllers
 
             if (ModelState.IsValid)
             {
-                Rastreamento rastreamento = rastreamentoService.Get(id);
-                rastreamento.MinutosOcioso = rastreamentoModel.MinutosOcioso;
+                Rastreamento rastreamento = _rastreamentoService.Get(id);
                 rastreamento.TempoFinalOciosidade = rastreamentoModel.TempoFinalOciosidade;
-                rastreamento.TempoIniciailOciosidade = rastreamentoModel.TempoIniciailOciosidade;
+                rastreamento.TempoInicialOciosidade = rastreamentoModel.TempoInicialOciosidade;
                 rastreamento.PessoaId = rastreamentoModel.PessoaId;
 
-                rastreamentoService.Put<RastreamentoValidator>(rastreamento);
+                _rastreamentoService.Put<RastreamentoValidator>(rastreamento);
             }
         }
 
@@ -68,7 +73,31 @@ namespace backend.Controllers
             if (id <= 0)
                 NotFound();
 
-            rastreamentoService.Delete(id);
+            _rastreamentoService.Delete(id);
+        }
+
+        [HttpGet("Dashboard")]
+        public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorPeriodo(DateTime dataInicio, DateTime dataFim)
+        {
+            return _rastreamentoService.GetRastreamentoPorPeriodo(dataInicio, dataFim).ToList();
+        }
+
+        [HttpGet("Dashboard/PorSetor")]
+        public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorSetorPeriodo(int setorId, DateTime dataInicio, DateTime dataFim)
+        {
+            return _rastreamentoService.GetRastreamentoPorSetorPeriodo(dataInicio, dataFim, setorId).ToList();
+        }
+
+        [HttpGet("Dashboard/PorEquipe")]
+        public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorEquipePeriodo(int equipe, DateTime dataInicio, DateTime dataFim)
+        {
+            return _rastreamentoService.GetRastreamentoPorEquipePeriodo(dataInicio, dataFim, equipe).ToList();
+        }
+
+        [HttpGet("Dashboard/PorPessoa")]
+        public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorPessoaPeriodo(int pessoaId, DateTime dataInicio, DateTime dataFim)
+        {
+            return _rastreamentoService.GetRastreamentoPorPessoaPeriodo(dataInicio, dataFim, pessoaId).ToList();
         }
     }
 }

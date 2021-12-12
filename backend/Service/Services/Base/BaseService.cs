@@ -10,7 +10,7 @@ namespace backend.Service.Services.Base
     public abstract class BaseService<T> : IService<T> where T : EntityBase
     {
 
-        private readonly IRepository<T> _repository;
+        public readonly IRepository<T> _repository;
 
         public BaseService(IRepository<T> repository)
         {

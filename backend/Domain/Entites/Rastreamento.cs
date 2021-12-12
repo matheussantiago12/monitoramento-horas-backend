@@ -8,13 +8,10 @@ namespace backend.Domain.Entites
     public class Rastreamento : EntityBase
     {
         [Column("tempo_inicial_ociosidade")]
-        public DateTime TempoIniciailOciosidade { get; set; }
+        public DateTime TempoInicialOciosidade { get; set; }
 
         [Column("tempo_final_ociosidade")]
         public DateTime TempoFinalOciosidade { get; set; }
-
-        [Column("minutos_ocioso")]
-        public decimal MinutosOcioso { get; set; }
 
         [Column("pessoa_id")]
         public long PessoaId { get; set; }

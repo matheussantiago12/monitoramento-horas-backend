@@ -8,10 +8,6 @@ namespace backend.Service.Validators
     {
         public RastreamentoValidator()
         {
-            RuleFor(c => c.MinutosOcioso)
-                .NotEmpty().WithMessage("Informe os Minutos Ociosos.")
-                .NotNull().WithMessage("Informe os Minutos Ociosos.");
-
             RuleFor(c => c.PessoaId)
                 .NotEmpty().WithMessage("Informe o Id da Pessoa.")
                 .NotNull().WithMessage("Informe o Id da Pessoa.");
@@ -20,7 +16,7 @@ namespace backend.Service.Validators
                 .NotEmpty().WithMessage("Informe o Tempo Final de Ociosidade.")
                 .NotNull().WithMessage("Informe o Tempo Final de Ociosidade.");
 
-            RuleFor(c => c.TempoIniciailOciosidade)
+            RuleFor(c => c.TempoInicialOciosidade)
                 .NotEmpty().WithMessage("Informe o Tempo Inicial de Ociosidade.")
                 .NotNull().WithMessage("Informe o Tempo Inicial de Ociosidade.");
         }
