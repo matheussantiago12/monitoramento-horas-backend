@@ -25,7 +25,7 @@ namespace backend.Controllers
             return equipeService.Get().ToList();
         }
 
-        [HttpGet]
+        [HttpGet("PorNome")]
         [Authorize]
         public ActionResult<IEnumerable<Equipe>> GetAllLikeNome(string nome)
         {

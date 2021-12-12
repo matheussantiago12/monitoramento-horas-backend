@@ -25,7 +25,7 @@ namespace backend.Controllers
             return setorService.Get().ToList();
         }
 
-        [HttpGet]
+        [HttpGet("PorNome")]
         [Authorize]
         public ActionResult<IEnumerable<Setor>> GetAllLikeNome(string nome)
         {

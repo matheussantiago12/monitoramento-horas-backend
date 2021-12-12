@@ -45,7 +45,7 @@ namespace backend.Controllers
             return usuarioService.Get().ToList();
         }
 
-        [HttpGet]
+        [HttpGet("PorNome")]
         [Authorize]
         public ActionResult<IEnumerable<Usuario>> GetAllLikeNome(string nome)
         {
