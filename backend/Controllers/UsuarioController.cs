@@ -20,7 +20,7 @@ namespace backend.Controllers
             this.usuarioService = (UsuarioService)_usuarioService;
         }
 
-        [HttpPost("/validar-credenciais")]
+        [HttpPost("validar-credenciais")]
         public ActionResult<dynamic> ValidarCrendenciais([FromBody] UsuarioValidarCredenciasDto dto)
         {
             if (string.IsNullOrEmpty(dto.Email) || string.IsNullOrEmpty(dto.Senha))
