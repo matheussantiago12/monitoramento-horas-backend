@@ -21,7 +21,7 @@ namespace backend.Infra.Data.Repository
                 .Include(i => i.IntegrantePessoa.TipoPessoa)
                 .Include(i => i.Equipe)
                 .Include(i => i.Equipe.PessoaLider)
-                .Include(i => i.Equipe.PessoaLider.TipoPessoa)
+                .Include(i => i.Equipe.PessoaLider.Pessoa.TipoPessoa)
                 .Include(i => i.Equipe.Setor).ToList();
         }
 
@@ -32,7 +32,7 @@ namespace backend.Infra.Data.Repository
                  .Include(i => i.IntegrantePessoa.TipoPessoa)
                  .Include(i => i.Equipe)
                  .Include(i => i.Equipe.PessoaLider)
-                 .Include(i => i.Equipe.PessoaLider.TipoPessoa)
+                 .Include(i => i.Equipe.PessoaLider.Pessoa.TipoPessoa)
                  .Include(i => i.Equipe.Setor).ToList()
                  .Find(i => i.Id == id);
         }
@@ -44,7 +44,7 @@ namespace backend.Infra.Data.Repository
                 .Include(i => i.IntegrantePessoa.TipoPessoa)
                 .Include(i => i.Equipe)
                 .Include(i => i.Equipe.PessoaLider)
-                .Include(i => i.Equipe.PessoaLider.TipoPessoa)
+                .Include(i => i.Equipe.PessoaLider.Pessoa.TipoPessoa)
                 .Include(i => i.Equipe.Setor)
                 .Where(i => i.EquipeId == equipeId)
                 .ToList();

@@ -9,7 +9,7 @@ namespace backend.Domain.Entites
         [Column("pessoa_lider_id")]
         public long PessoaLiderId { get; set; }
 
-        public Pessoa PessoaLider { get; set; }
+        public Usuario PessoaLider { get; set; }
 
         [Column("nome")]
         public string Nome { get; set;}
