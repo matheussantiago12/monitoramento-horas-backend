@@ -1,5 +1,6 @@
 ﻿using backend.Domain.Entites;
 using backend.Domain.Interfaces;
+using backend.Service.Services;
 using backend.Service.Validators;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,10 @@ namespace backend.Controllers
     [ApiController]
     public class EquipeController : Controller
     {
-        private readonly IService<Equipe> equipeService;
+        private readonly EquipeService equipeService;
         public EquipeController(IService<Equipe> _equipeService)
         {
-            this.equipeService = _equipeService;
+            this.equipeService = (EquipeService)_equipeService;
         }
         [HttpGet]
         [Authorize]
@@ -23,6 +24,14 @@ namespace backend.Controllers
         {
             return equipeService.Get().ToList();
         }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult<IEnumerable<Equipe>> GetAllLikeNome(string nome)
+        {
+            return equipeService.GetAllLikeNome(nome).ToList();
+        }
+
         [HttpGet("{id}")]
         [Authorize]
         public ActionResult<Equipe> GetById(long id)

@@ -30,5 +30,9 @@ namespace backend.Infra.Data.Repository
                 .ToList()
                 .Find(usuario => usuario.Email.ToLower() == email.ToLower() && usuario.Senha.ToLower() == senha.ToLower());
         }
+        public IEnumerable<Usuario> GetAllLikeNome(string nome)
+        {
+            return _dbContext.Usuarios.Where(u => u.Pessoa.NomeCompleto.Contains(nome)).Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using backend.Domain.Entites;
 using backend.Domain.Interfaces;
+using backend.Service.Services;
 using backend.Service.Validators;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,10 @@ namespace backend.Controllers
     [ApiController]
     public class SetorController : Controller
     {
-        private readonly IService<Setor> setorService;
+        private readonly SetorService setorService;
         public SetorController(IService<Setor> _setorService)
         {
-            this.setorService = _setorService;
+            this.setorService = (SetorService)_setorService;
         }
         [HttpGet]
         [Authorize]
@@ -23,6 +24,14 @@ namespace backend.Controllers
         {
             return setorService.Get().ToList();
         }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult<IEnumerable<Setor>> GetAllLikeNome(string nome)
+        {
+            return setorService.GetAllLikeNome(nome).ToList();
+        }
+
         [HttpGet("{id}")]
         [Authorize]
         public ActionResult<Setor> GetById(long id)

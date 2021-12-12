@@ -44,6 +44,14 @@ namespace backend.Controllers
         {
             return usuarioService.Get().ToList();
         }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult<IEnumerable<Usuario>> GetAllLikeNome(string nome)
+        {
+            return usuarioService.GetAllLikeNome(nome).ToList();
+        }
+
         [HttpGet("{id}")]
         public ActionResult<Usuario> GetById(long id)
         {
@@ -53,6 +61,7 @@ namespace backend.Controllers
             }
             return BadRequest();
         }
+
         [HttpPost]
         [Authorize]
         public void Post([FromBody] Usuario usuarioModel)
@@ -62,6 +71,7 @@ namespace backend.Controllers
                 usuarioService.Post<UsuarioValidator>(usuarioModel);
             }
         }
+
         [HttpPut("{id}")]
         [Authorize]
         public void Put(long id, [FromBody] Usuario usuarioModel)
