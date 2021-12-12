@@ -50,7 +50,8 @@ namespace backend.Controllers
         [HttpGet("logado")]
         public ActionResult<Usuario> GetLogado([FromHeader]string authorization)
         {
-            var email = TokenService.ObterActor(authorization);
+            var token = authorization.Split(" ");
+            var email = TokenService.ObterActor(token[1]);
             return Ok(usuarioService.GetPorEmail(email));
         }
 

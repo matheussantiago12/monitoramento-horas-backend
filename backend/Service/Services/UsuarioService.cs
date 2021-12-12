@@ -25,9 +25,9 @@ namespace backend.Service.Services
             }
 
             return new InputGerarTokenDto(
-                usuario.Pessoa.NomeCompleto,
+                usuario.Email,
                 usuario.Pessoa.Cargo,
-                usuario.Email);
+                usuario.Pessoa.NomeCompleto);
         }
 
         public IEnumerable<Usuario> GetAllLikeNome(string nome)
