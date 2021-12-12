@@ -5,8 +5,10 @@ using backend.Service.Services;
 using backend.Service.Validators;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 
 namespace backend.Controllers
 {
@@ -43,6 +45,13 @@ namespace backend.Controllers
         public ActionResult<IEnumerable<Usuario>> GetAll()
         {
             return usuarioService.Get().ToList();
+        }
+
+        [HttpGet("logado")]
+        public ActionResult<Usuario> GetLogado([FromHeader]string authorization)
+        {
+            var email = TokenService.ObterActor(authorization);
+            return Ok(usuarioService.GetPorEmail(email));
         }
 
         [HttpGet("PorNome")]

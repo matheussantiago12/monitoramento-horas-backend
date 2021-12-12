@@ -16,6 +16,6 @@ namespace backend.Domain.Entites
         public Equipe Equipe { get; set; }
         [Column("tipo_pessoa_id")]
         public long TipoPessoaId { get; set; }
-        public Setor TipoPessoa { get; set; }
+        public TipoPessoa TipoPessoa { get; set; }
     }
 }

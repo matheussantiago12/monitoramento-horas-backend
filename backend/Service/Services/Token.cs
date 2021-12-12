@@ -20,6 +20,7 @@ namespace backend.Service.Services
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
+                    new Claim(ClaimTypes.Actor, dto.Email),
                     new Claim(ClaimTypes.Email, dto.Email),
                     new Claim(ClaimTypes.Role, dto.Cargo),
                     new Claim(ClaimTypes.Name, dto.NomeCompleto)
@@ -30,6 +31,14 @@ namespace backend.Service.Services
 
             var token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
+        }
+
+        public static string ObterActor(string authorization)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+
+            var token = tokenHandler.ReadJwtToken(authorization);
+            return token.Payload.Actort;
         }
     }
 }

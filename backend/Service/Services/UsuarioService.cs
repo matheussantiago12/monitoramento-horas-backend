@@ -3,6 +3,7 @@ using backend.Domain.Interfaces;
 using backend.Dtos;
 using backend.Infra.Data.Repository;
 using backend.Service.Services.Base;
+using System;
 using System.Collections.Generic;
 
 namespace backend.Service.Services
@@ -32,6 +33,11 @@ namespace backend.Service.Services
         public IEnumerable<Usuario> GetAllLikeNome(string nome)
         {
             return _usuarioRepository.GetAllLikeNome(nome);
+        }
+
+        internal IEnumerable<Usuario> GetPorEmail(string email)
+        {
+            return _usuarioRepository.GetPorEmail(email);
         }
     }
 }

@@ -2,6 +2,7 @@
 using backend.Infra.Data.Context;
 using backend.Infra.Data.Repository.Base;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -33,6 +34,11 @@ namespace backend.Infra.Data.Repository
         public IEnumerable<Usuario> GetAllLikeNome(string nome)
         {
             return _dbContext.Usuarios.Where(u => u.Pessoa.NomeCompleto.Contains(nome)).Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa);
+        }
+
+        public IEnumerable<Usuario> GetPorEmail(string email)
+        {
+            return _dbContext.Usuarios.Where(u => u.Email == email);
         }
     }
 }
