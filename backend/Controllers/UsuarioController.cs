@@ -31,7 +31,7 @@ namespace backend.Controllers
             InputGerarTokenDto informacaoToken = usuarioService.ValidarCredenciais(dto.Email, dto.Senha);
             if (informacaoToken == null)
             {
-                return NotFound(new { message = "Usuário ou senha inválidos" });
+                return Unauthorized(new { message = "Usuário ou senha inválidos" });
             }
 
             string token = TokenService.GerarToken(informacaoToken);
