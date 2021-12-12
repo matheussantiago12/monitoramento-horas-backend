@@ -83,13 +83,6 @@ namespace backend
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true)
-                .AllowCredentials());
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -104,6 +97,12 @@ namespace backend
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true)
+                .AllowCredentials());
 
             app.UseAuthentication();
             app.UseAuthorization();
