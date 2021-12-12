@@ -4,6 +4,7 @@ using backend.Dtos;
 using backend.Service.Services;
 using backend.Service.Validators;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Security.Claims;
 
 namespace backend.Controllers
 {
+    [DisableCors]
     [Route("api/usuario")]
     [ApiController]
     public class UsuarioController : Controller
