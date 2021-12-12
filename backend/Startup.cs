@@ -79,6 +79,11 @@ namespace backend
 
             services.AddScoped<IRepository<Configuracao>, ConfiguracaoRepository>();
             services.AddTransient<IService<Configuracao>, ConfiguracaoService>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -101,11 +106,7 @@ namespace backend
             app.UseAuthentication();
             app.UseAuthorization();
 
-            app.UseCors(x => x
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .SetIsOriginAllowed(origin => true)
-                .AllowCredentials());
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
