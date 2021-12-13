@@ -58,7 +58,7 @@ namespace backend.Controllers
             return listaDto;
         }
 
-        [HttpGet]
+        [HttpGet("lideres")]
         [Authorize]
         public ActionResult<IEnumerable<UsuarioComPessoaSemEquipeDto>> GetUsuariosLideres()
         {
