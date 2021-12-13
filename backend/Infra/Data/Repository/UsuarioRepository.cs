@@ -16,12 +16,12 @@ namespace backend.Infra.Data.Repository
 
         public override IEnumerable<Usuario> GetAll()
         {
-            return _dbContext.Set<Usuario>().Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa).ToList();
+            return _dbContext.Set<Usuario>().Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa).Include(u => u.Pessoa.Equipe).Include(u => u.Pessoa.Equipe.PessoaLider).Include(u => u.Pessoa.Equipe.Setor).ToList();
         }
 
         public override Usuario GetById(long id)
         {
-            return _dbContext.Set<Usuario>().Include(u => u.Pessoa).Include(p => p.Pessoa.TipoPessoa).ToList().Find(usuario => usuario.Id == id);
+            return _dbContext.Set<Usuario>().Include(u => u.Pessoa).Include(p => p.Pessoa.TipoPessoa).Include(u => u.Pessoa.Equipe).Include(u => u.Pessoa.Equipe.PessoaLider).Include(u => u.Pessoa.Equipe.Setor).ToList().Find(usuario => usuario.Id == id);
         }
 
         public Usuario ValidarCredenciais(string email, string senha)
@@ -31,7 +31,7 @@ namespace backend.Infra.Data.Repository
 
         public IEnumerable<Usuario> GetAllLikeNome(string nome)
         {
-            return _dbContext.Usuarios.Where(u => u.Pessoa.NomeCompleto.Contains(nome)).Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa);
+            return _dbContext.Usuarios.Where(u => u.Pessoa.NomeCompleto.Contains(nome)).Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa).Include(u => u.Pessoa.Equipe).Include(u => u.Pessoa.Equipe.PessoaLider).Include(u => u.Pessoa.Equipe.Setor);
         }
 
         public IEnumerable<Usuario> GetPorEmail(string email)

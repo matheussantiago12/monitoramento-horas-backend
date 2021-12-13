@@ -18,9 +18,11 @@ namespace backend.Controllers
     public class UsuarioController : Controller
     {
         private readonly UsuarioService usuarioService;
-        public UsuarioController(IService<Usuario> _usuarioService)
+        private readonly PessoaService pessoaService;
+        public UsuarioController(IService<Usuario> _usuarioService, IService<Pessoa> _pessoaService)
         {
             this.usuarioService = (UsuarioService)_usuarioService;
+            this.pessoaService = (PessoaService)_pessoaService;
         }
 
         [HttpPost("validar-credenciais")]
@@ -43,9 +45,17 @@ namespace backend.Controllers
 
         [HttpGet]
         [Authorize]
-        public ActionResult<IEnumerable<Usuario>> GetAll()
+        public ActionResult<IEnumerable<UsuarioComPessoaComEquipeSemLiderDto>> GetAll()
         {
-            return usuarioService.Get().ToList();
+            var usuarios = usuarioService.Get().ToList();
+            var listaDto = new List<UsuarioComPessoaComEquipeSemLiderDto>();
+
+            foreach (var usuario in usuarios)
+            {
+                listaDto.Add(new UsuarioComPessoaComEquipeSemLiderDto(usuario));
+            }
+
+            return listaDto;
         }
 
         [HttpGet("logado")]
@@ -58,45 +68,77 @@ namespace backend.Controllers
 
         [HttpGet("PorNome")]
         [Authorize]
-        public ActionResult<IEnumerable<Usuario>> GetAllLikeNome(string nome)
+        public ActionResult<IEnumerable<UsuarioComPessoaComEquipeSemLiderDto>> GetAllLikeNome(string nome)
         {
-            return usuarioService.GetAllLikeNome(nome).ToList();
+            var usuarios = usuarioService.GetAllLikeNome(nome).ToList();
+            var listaDto = new List<UsuarioComPessoaComEquipeSemLiderDto>();
+
+            foreach (var usuario in usuarios)
+            {
+                listaDto.Add(new UsuarioComPessoaComEquipeSemLiderDto(usuario));
+            }
+
+            return listaDto;
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Usuario> GetById(long id)
+        public ActionResult<UsuarioComPessoaComEquipeSemLiderDto> GetById(long id)
         {
             if (ModelState.IsValid)
             {
-                return usuarioService.Get(id);
+                return new UsuarioComPessoaComEquipeSemLiderDto(usuarioService.Get(id));
             }
             return BadRequest();
         }
 
         [HttpPost]
         [Authorize]
-        public void Post([FromBody] Usuario usuarioModel)
+        public void Post([FromBody] UsuarioCriacaoEdicaoDto usuarioModel)
         {
             if (ModelState.IsValid)
             {
-                usuarioService.Post<UsuarioValidator>(usuarioModel);
+                var pessoa = new Pessoa()
+                {
+                    Cargo = usuarioModel.Cargo,
+                    EquipeId = usuarioModel.EquipeId,
+                    HorasTrabalhoDiario = usuarioModel.CargaHorariaDiaria,
+                    NomeCompleto = usuarioModel.NomeCompleto,
+                    TipoPessoaId = usuarioModel.TipoPessoaId
+                };
+                var pessoaCriada = pessoaService.Post<PessoaValidator>(pessoa);
+
+                var usuario = new Usuario()
+                {
+                    Email = usuarioModel.Email,
+                    Senha = usuarioModel.Senha,
+                    PessoaId = pessoaCriada.Id
+                };
+
+                usuarioService.Post<UsuarioValidator>(usuario);
             }
         }
 
         [HttpPut("{id}")]
         [Authorize]
-        public void Put(long id, [FromBody] Usuario usuarioModel)
+        public void Put(long id, [FromBody] UsuarioCriacaoEdicaoDto usuarioModel)
         {
             if (id <= 0)
                 NotFound();
 
             if (ModelState.IsValid)
             {
-                Usuario usuario = usuarioService.Get(id);
+                var usuario = usuarioService.Get(id);
+                var pessoa = pessoaService.Get(usuario.PessoaId);
+
                 usuario.Email = usuarioModel.Email;
                 usuario.Senha = usuarioModel.Senha;
-                usuario.PessoaId = usuarioModel.PessoaId;
+                pessoa.Cargo = usuarioModel.Cargo;
+                pessoa.EquipeId = usuarioModel.EquipeId;
+                pessoa.HorasTrabalhoDiario = usuarioModel.CargaHorariaDiaria;
+                pessoa.NomeCompleto = usuarioModel.NomeCompleto;
+                pessoa.TipoPessoaId = usuarioModel.TipoPessoaId;
 
+                pessoaService.Put<PessoaValidator>(pessoa);
                 usuarioService.Put<UsuarioValidator>(usuario);
             }
         }
