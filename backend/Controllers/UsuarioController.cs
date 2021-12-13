@@ -13,7 +13,6 @@ using System.Security.Claims;
 
 namespace backend.Controllers
 {
-    [DisableCors]
     [Route("api/usuario")]
     [ApiController]
     public class UsuarioController : Controller
