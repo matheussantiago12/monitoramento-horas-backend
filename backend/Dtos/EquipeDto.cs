@@ -6,6 +6,7 @@ namespace backend.Dtos
     {
         public EquipeDto(Equipe equipe)
         {
+            Id = equipe.Id;
             PessoaLiderId = equipe.PessoaLiderId;
             PessoaLider = new UsuarioComPessoaSemEquipeDto(equipe.PessoaLider);
             Nome = equipe.Nome;
@@ -13,6 +14,7 @@ namespace backend.Dtos
             Setor = equipe.Setor;
         }
 
+        public long Id { get; set; }
         public long PessoaLiderId { get; set; }
 
         public UsuarioComPessoaSemEquipeDto PessoaLider { get; set; }
