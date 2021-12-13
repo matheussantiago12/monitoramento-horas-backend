@@ -77,28 +77,24 @@ namespace backend.Controllers
         }
 
         [HttpGet("Dashboard")]
-        [Authorize]
         public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorPeriodo(DateTime dataInicio, DateTime dataFim)
         {
             return _rastreamentoService.GetRastreamentoPorPeriodo(dataInicio, dataFim).ToList();
         }
 
         [HttpGet("Dashboard/PorSetor")]
-        [Authorize]
         public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorSetorPeriodo(int setorId, DateTime dataInicio, DateTime dataFim)
         {
             return _rastreamentoService.GetRastreamentoPorSetorPeriodo(dataInicio, dataFim, setorId).ToList();
         }
 
         [HttpGet("Dashboard/PorEquipe")]
-        [Authorize]
         public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorEquipePeriodo(int equipe, DateTime dataInicio, DateTime dataFim)
         {
             return _rastreamentoService.GetRastreamentoPorEquipePeriodo(dataInicio, dataFim, equipe).ToList();
         }
 
         [HttpGet("Dashboard/PorPessoa")]
-        [Authorize]
         public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorPessoaPeriodo(int pessoaId, DateTime dataInicio, DateTime dataFim)
         {
             return _rastreamentoService.GetRastreamentoPorPessoaPeriodo(dataInicio, dataFim, pessoaId).ToList();

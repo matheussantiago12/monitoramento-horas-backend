@@ -16,12 +16,12 @@ namespace backend.Infra.Data.Repository
 
         public override IEnumerable<Equipe> GetAll()
         {
-            return _dbContext.Set<Equipe>().Include(e => e.PessoaLider).Include(e => e.PessoaLider.Pessoa.TipoPessoa).Include(e => e.Setor).ToList();
+            return _dbContext.Equipes.Include(e => e.PessoaLider).Include(e => e.PessoaLider.Pessoa).Include(e => e.PessoaLider.Pessoa.TipoPessoa).Include(e => e.Setor).ToList();
         }
 
         public override Equipe GetById(long id)
         {
-            return _dbContext.Set<Equipe>().Include(e => e.PessoaLider).Include(e => e.PessoaLider.Pessoa.TipoPessoa).Include(e => e.Setor).ToList().Find(equipe => equipe.Id == id);
+            return _dbContext.Equipes.Include(e => e.PessoaLider).Include(e => e.PessoaLider.Pessoa).Include(e => e.PessoaLider.Pessoa.TipoPessoa).Include(e => e.Setor).ToList().Find(equipe => equipe.Id == id);
         }
 
         public IEnumerable<Equipe> GetAllLikeNome(string nome)

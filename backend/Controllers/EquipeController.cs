@@ -1,5 +1,6 @@
 ﻿using backend.Domain.Entites;
 using backend.Domain.Interfaces;
+using backend.Dtos;
 using backend.Service.Services;
 using backend.Service.Validators;
 using Microsoft.AspNetCore.Authorization;
@@ -18,27 +19,40 @@ namespace backend.Controllers
         {
             this.equipeService = (EquipeService)_equipeService;
         }
+
         [HttpGet]
         [Authorize]
-        public ActionResult<IEnumerable<Equipe>> GetAll()
+        public ActionResult<IEnumerable<EquipeDto>> GetAll()
         {
-            return equipeService.Get().ToList();
+            var equipes = equipeService.Get().ToList();
+            var listaDto = new List<EquipeDto>();
+            foreach (var equipe in equipes)
+            {
+                listaDto.Add(new EquipeDto(equipe));
+            }
+            return listaDto;
         }
 
         [HttpGet("PorNome")]
         [Authorize]
-        public ActionResult<IEnumerable<Equipe>> GetAllLikeNome(string nome)
+        public ActionResult<IEnumerable<EquipeDto>> GetAllLikeNome(string nome)
         {
-            return equipeService.GetAllLikeNome(nome).ToList();
+            var equipes = equipeService.GetAllLikeNome(nome).ToList();
+            var listaDto = new List<EquipeDto>();
+            foreach (var equipe in equipes)
+            {
+                listaDto.Add(new EquipeDto(equipe));
+            }
+            return listaDto;
         }
 
         [HttpGet("{id}")]
         [Authorize]
-        public ActionResult<Equipe> GetById(long id)
+        public ActionResult<EquipeDto> GetById(long id)
         {
             if (ModelState.IsValid)
             {
-                return equipeService.Get(id);
+                return new EquipeDto(equipeService.Get(id));
             }
             return BadRequest();
         }
