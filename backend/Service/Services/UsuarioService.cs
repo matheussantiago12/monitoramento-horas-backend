@@ -35,9 +35,14 @@ namespace backend.Service.Services
             return _usuarioRepository.GetAllLikeNome(nome);
         }
 
-        internal IEnumerable<Usuario> GetPorEmail(string email)
+        public IEnumerable<Usuario> GetPorEmail(string email)
         {
             return _usuarioRepository.GetPorEmail(email);
+        }
+
+        public IEnumerable<Usuario> GetUsuariosLideres()
+        {
+            return _usuarioRepository.GetUsuariosLideres();
         }
     }
 }

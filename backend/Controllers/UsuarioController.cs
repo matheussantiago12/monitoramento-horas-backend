@@ -58,6 +58,21 @@ namespace backend.Controllers
             return listaDto;
         }
 
+        [HttpGet]
+        [Authorize]
+        public ActionResult<IEnumerable<UsuarioComPessoaSemEquipeDto>> GetUsuariosLideres()
+        {
+            var usuarios = usuarioService.GetUsuariosLideres().ToList();
+            var listaDto = new List<UsuarioComPessoaSemEquipeDto>();
+
+            foreach (var usuario in usuarios)
+            {
+                listaDto.Add(new UsuarioComPessoaSemEquipeDto(usuario));
+            }
+
+            return listaDto;
+        }
+
         [HttpGet("logado")]
         public ActionResult<Usuario> GetLogado([FromHeader]string authorization)
         {
