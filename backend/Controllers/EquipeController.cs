@@ -75,6 +75,7 @@ namespace backend.Controllers
             if (ModelState.IsValid)
             {
                 Equipe equipe = equipeService.Get(id);
+                equipe.Nome = equipeModel.Nome;
                 equipe.PessoaLiderId = equipeModel.PessoaLiderId;
                 equipe.SetorId = equipeModel.SetorId;
 
