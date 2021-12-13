@@ -26,11 +26,9 @@ namespace backend.Infra.Data.Repository
 
         public Usuario ValidarCredenciais(string email, string senha)
         {
-            return _dbContext.Set<Usuario>()
-                .Include(p => p.Pessoa)
-                .ToList()
-                .Find(usuario => usuario.Email.ToLower() == email.ToLower() && usuario.Senha.ToLower() == senha.ToLower());
+            return _dbContext.Usuarios.Where(usuario => usuario.Email.ToLower() == email.ToLower() && usuario.Senha.ToLower() == senha.ToLower()).Include(p => p.Pessoa).FirstOrDefault(); 
         }
+
         public IEnumerable<Usuario> GetAllLikeNome(string nome)
         {
             return _dbContext.Usuarios.Where(u => u.Pessoa.NomeCompleto.Contains(nome)).Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa);
