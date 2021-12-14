@@ -59,11 +59,17 @@ namespace backend.Controllers
 
         [HttpGet("buscar-setor/{idSetor}")]
         [Authorize]
-        public ActionResult<IEnumerable<Equipe>> GetBySetorId(long idSetor)
+        public ActionResult<IEnumerable<EquipeDto>> GetBySetorId(long idSetor)
         {
             if (idSetor > 0)
             {
-                return equipeService.GetBySetorId(idSetor).ToList();
+                var equipes = equipeService.GetBySetorId(idSetor).ToList();
+                var listaDto = new List<EquipeDto>();
+                foreach (var equipe in equipes)
+                {
+                    listaDto.Add(new EquipeDto(equipe));
+                }
+                return listaDto;
             }
 
             return BadRequest();
