@@ -74,7 +74,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("logado")]
-        public ActionResult<Usuario> GetLogado([FromHeader]string authorization)
+        public ActionResult<Usuario> GetLogado([FromHeader] string authorization)
         {
             var token = authorization.Split(" ");
             var email = TokenService.ObterActor(token[1] ?? authorization);
@@ -86,6 +86,21 @@ namespace backend.Controllers
         public ActionResult<IEnumerable<UsuarioComPessoaComEquipeSemLiderDto>> GetAllLikeNome(string nome)
         {
             var usuarios = usuarioService.GetAllLikeNome(nome).ToList();
+            var listaDto = new List<UsuarioComPessoaComEquipeSemLiderDto>();
+
+            foreach (var usuario in usuarios)
+            {
+                listaDto.Add(new UsuarioComPessoaComEquipeSemLiderDto(usuario));
+            }
+
+            return listaDto;
+        }
+
+        [HttpGet("buscar-equipe/{equipeId}")]
+        [Authorize]
+        public ActionResult<IEnumerable<UsuarioComPessoaComEquipeSemLiderDto>> GetByEquipe(long equipeId)
+        {
+            var usuarios = usuarioService.GetByEquipeId(equipeId).ToList();
             var listaDto = new List<UsuarioComPessoaComEquipeSemLiderDto>();
 
             foreach (var usuario in usuarios)

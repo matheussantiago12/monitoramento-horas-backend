@@ -1,7 +1,6 @@
 ﻿using backend.Domain.Entites;
 using backend.Infra.Data.Context;
 using backend.Infra.Data.Repository.Base;
-using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +25,7 @@ namespace backend.Infra.Data.Repository
 
         public Usuario ValidarCredenciais(string email, string senha)
         {
-            return _dbContext.Usuarios.Where(usuario => usuario.Email.ToLower() == email.ToLower() && usuario.Senha.ToLower() == senha.ToLower()).Include(p => p.Pessoa).FirstOrDefault(); 
+            return _dbContext.Usuarios.Where(usuario => usuario.Email.ToLower() == email.ToLower() && usuario.Senha.ToLower() == senha.ToLower()).Include(p => p.Pessoa).FirstOrDefault();
         }
 
         public IEnumerable<Usuario> GetAllLikeNome(string nome)
@@ -42,6 +41,16 @@ namespace backend.Infra.Data.Repository
         public IEnumerable<Usuario> GetPorEmail(string email)
         {
             return _dbContext.Usuarios.Where(u => u.Email == email).Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa).Include(u => u.Pessoa.Equipe).Include(u => u.Pessoa.Equipe.PessoaLider).Include(u => u.Pessoa.Equipe.Setor);
+        }
+
+        public IEnumerable<Usuario> GetByEquipeId(long equipeId)
+        {
+            return _dbContext.Usuarios
+                .Where(u => u.Pessoa.EquipeId == equipeId)
+                .Include(p => p.Pessoa)
+                .Include(p => p.Pessoa.TipoPessoa)
+                .Include(u => u.Pessoa.Equipe)
+                .Include(u => u.Pessoa.Equipe.PessoaLider).Include(u => u.Pessoa.Equipe.Setor);
         }
     }
 }

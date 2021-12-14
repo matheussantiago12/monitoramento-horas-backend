@@ -44,5 +44,11 @@ namespace backend.Service.Services
         {
             return _usuarioRepository.GetUsuariosLideres();
         }
+
+        public IEnumerable<Usuario> GetByEquipeId(long equipeId)
+        {
+            return _usuarioRepository.GetByEquipeId(equipeId);
+        }
+
     }
 }
