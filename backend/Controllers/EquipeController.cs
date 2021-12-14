@@ -1,5 +1,6 @@
 ﻿using backend.Domain.Entites;
 using backend.Domain.Interfaces;
+using backend.Service.Services;
 using backend.Service.Validators;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,10 +13,10 @@ namespace backend.Controllers
     [ApiController]
     public class EquipeController : Controller
     {
-        private readonly IService<Equipe> equipeService;
+        private readonly EquipeService equipeService;
         public EquipeController(IService<Equipe> _equipeService)
         {
-            this.equipeService = _equipeService;
+            this.equipeService = (EquipeService)_equipeService;
         }
         [HttpGet]
         [Authorize]
@@ -33,6 +34,19 @@ namespace backend.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet("buscar-setor/{idSetor}")]
+        [Authorize]
+        public ActionResult<IEnumerable<Equipe>> GetBySetorId(long idSetor)
+        {
+            if (idSetor > 0)
+            {
+                return equipeService.GetBySetorId(idSetor).ToList();
+            }
+
+            return BadRequest();
+        }
+
         [HttpPost]
         [Authorize]
         public void Post([FromBody] Equipe equipeModel)

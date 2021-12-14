@@ -2809,11 +2809,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor\\monitoramento-horas-backend\\backend\\backend.csproj",
+      "projectUniqueName": "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor - não excluir\\monitoramento-horas-backend\\backend\\backend.csproj",
       "projectName": "backend",
-      "projectPath": "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor\\monitoramento-horas-backend\\backend\\backend.csproj",
+      "projectPath": "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor - não excluir\\monitoramento-horas-backend\\backend\\backend.csproj",
       "packagesPath": "C:\\Users\\maria\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor\\monitoramento-horas-backend\\backend\\obj\\",
+      "outputPath": "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor - não excluir\\monitoramento-horas-backend\\backend\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\maria\\AppData\\Roaming\\NuGet\\NuGet.Config",

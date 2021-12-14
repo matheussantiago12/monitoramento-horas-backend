@@ -22,5 +22,15 @@ namespace backend.Infra.Data.Repository
         {
             return _dbContext.Set<Equipe>().Include(e => e.PessoaLider).Include(e => e.PessoaLider.TipoPessoa).Include(e => e.Setor).ToList().Find(equipe => equipe.Id == id);
         }
+
+        public IEnumerable<Equipe> GetBySetorId(long idSetor)
+        {
+            return _dbContext.Set<Equipe>()
+                .Include(e => e.PessoaLider)
+                .Include(e => e.PessoaLider.TipoPessoa)
+                .Include(e => e.Setor)
+                .Where(equipe => equipe.SetorId == idSetor)
+                .ToList();
+        }
     }
 }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "z33u/KeKos0zePgRREaVHTgLwH6p1zdg9aNnQPcz8wdlZApganwNNGSD530UAMZgVU0hodcoJ+hjq7Ad4xmmKQ==",
+  "dgSpecHash": "mQx/YQ3TA92B+1iBvJYKwwWjz7OR9qqtx7ettXwpSKzou+BWPsQ57WM4/xF0fNBrZH5ISLNOBMCM1snRjrVygw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor\\monitoramento-horas-backend\\backend\\backend.csproj",
+  "projectFilePath": "C:\\Users\\maria\\OneDrive\\Área de Trabalho\\vitor - não excluir\\monitoramento-horas-backend\\backend\\backend.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\maria\\.nuget\\packages\\bouncycastle.netcore\\1.8.5\\bouncycastle.netcore.1.8.5.nupkg.sha512",
     "C:\\Users\\maria\\.nuget\\packages\\fluentvalidation\\10.3.4\\fluentvalidation.10.3.4.nupkg.sha512",
