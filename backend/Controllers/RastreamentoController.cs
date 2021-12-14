@@ -129,7 +129,51 @@ namespace backend.Controllers
         [HttpGet("Dashboard/PorSetor")]
         public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorSetorPeriodo(int setorId, DateTime dataInicio, DateTime dataFim)
         {
-            return _rastreamentoService.GetRastreamentoPorSetorPeriodo(dataInicio, dataFim, setorId).ToList();
+            var rastreamentos = _rastreamentoService.GetRastreamentoPorSetorPeriodo(dataInicio, dataFim, setorId).ToList();
+            var listaTempoOciosoPessoa = new List<TempoOciosoPessoaDto>();
+
+            foreach (var rastreamento in rastreamentos)
+            {
+                listaTempoOciosoPessoa.Add(new TempoOciosoPessoaDto
+                {
+                    TempoOcioso = (rastreamento.TempoFinalOciosidade - rastreamento.TempoInicialOciosidade).TotalMinutes,
+                    Pessoa = rastreamento.Pessoa
+                });
+            }
+
+            var listaAgrupadaPorEquipe = listaTempoOciosoPessoa.GroupBy(l => l.Pessoa.EquipeId).ToList();
+            var listaFinal = new List<RetornoRastreamentoPorPeriodoEquipeDto>();
+            double totalTempoOcioso;
+            double totalPessoas;
+            List<Pessoa> pessoasPercorridas = new List<Pessoa>();
+            Equipe equipeAtual;
+
+            foreach (var agrupamentoSetor in listaAgrupadaPorEquipe)
+            {
+                totalTempoOcioso = 0;
+                totalPessoas = 0;
+                equipeAtual = null;
+                pessoasPercorridas.Clear();
+
+                foreach (var pessoa in agrupamentoSetor)
+                {
+                    totalTempoOcioso += pessoa.TempoOcioso;
+                    if (!pessoasPercorridas.Contains(pessoa.Pessoa))
+                    {
+                        totalPessoas++;
+                        pessoasPercorridas.Add(pessoa.Pessoa);
+                    }
+                    equipeAtual = pessoa.Pessoa.Equipe;
+                }
+                listaFinal.Add(new RetornoRastreamentoPorPeriodoEquipeDto
+                {
+                    MediaMinutosOciosos = totalTempoOcioso / totalPessoas,
+                    Equipe = equipeAtual
+                });
+            }
+
+            return Ok(listaFinal);
+
         }
 
         [HttpGet("Dashboard/PorEquipe")]
