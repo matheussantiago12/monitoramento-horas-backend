@@ -1,6 +1,7 @@
 ﻿using backend.Domain.Entites;
 using backend.Infra.Data.Context;
 using backend.Infra.Data.Repository.Base;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
