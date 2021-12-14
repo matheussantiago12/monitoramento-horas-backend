@@ -215,9 +215,33 @@ namespace backend.Controllers
         }
 
         [HttpGet("Dashboard/PorPessoa")]
-        public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorPessoaPeriodo(int pessoaId, DateTime dataInicio, DateTime dataFim)
+        public ActionResult<TempoOciosoTotalERastreamentos> GetRastreamentoPorPessoaPeriodo(int pessoaId, DateTime dataInicio, DateTime dataFim)
         {
-            return _rastreamentoService.GetRastreamentoPorPessoaPeriodo(dataInicio, dataFim, pessoaId).ToList();
+            var rastreamentos = _rastreamentoService.GetRastreamentoPorPessoaPeriodo(dataInicio, dataFim, pessoaId).ToList(); 
+            var listaTempoOciosoPessoa = new List<TempoOciosoPessoaDto>();
+            double tempoOciosoTotal = 0;
+
+            foreach (var rastreamento in rastreamentos)
+            {
+                listaTempoOciosoPessoa.Add(new TempoOciosoPessoaDto
+                {
+                    TempoOcioso = (rastreamento.TempoFinalOciosidade - rastreamento.TempoInicialOciosidade).TotalMinutes,
+                    Pessoa = rastreamento.Pessoa
+                });
+            }
+
+            foreach (var tempoOciosoPessoa in listaTempoOciosoPessoa)
+            {
+                tempoOciosoTotal += tempoOciosoPessoa.TempoOcioso;
+            }
+
+            var resposta = new TempoOciosoTotalERastreamentos
+            {
+                TempoOcioso = tempoOciosoTotal,
+                Rastreamentos = rastreamentos
+            };
+
+            return Ok(resposta);
         }
     }
 }
