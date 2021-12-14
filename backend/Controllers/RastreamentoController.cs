@@ -127,7 +127,7 @@ namespace backend.Controllers
         }
 
         [HttpGet("Dashboard/PorSetor")]
-        public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorSetorPeriodo(int setorId, DateTime dataInicio, DateTime dataFim)
+        public ActionResult<IEnumerable<RetornoRastreamentoPorPeriodoEquipeDto>> GetRastreamentoPorSetorPeriodo(int setorId, DateTime dataInicio, DateTime dataFim)
         {
             var rastreamentos = _rastreamentoService.GetRastreamentoPorSetorPeriodo(dataInicio, dataFim, setorId).ToList();
             var listaTempoOciosoPessoa = new List<TempoOciosoPessoaDto>();
@@ -173,13 +173,45 @@ namespace backend.Controllers
             }
 
             return Ok(listaFinal);
-
         }
 
         [HttpGet("Dashboard/PorEquipe")]
-        public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorEquipePeriodo(int equipe, DateTime dataInicio, DateTime dataFim)
+        public ActionResult<IEnumerable<TempoOciosoPessoaDto>> GetRastreamentoPorEquipePeriodo(int equipeId, DateTime dataInicio, DateTime dataFim)
         {
-            return _rastreamentoService.GetRastreamentoPorEquipePeriodo(dataInicio, dataFim, equipe).ToList();
+            var rastreamentos = _rastreamentoService.GetRastreamentoPorEquipePeriodo(dataInicio, dataFim, equipeId).ToList();
+            var listaTempoOciosoPessoa = new List<TempoOciosoPessoaDto>();
+
+            foreach (var rastreamento in rastreamentos)
+            {
+                listaTempoOciosoPessoa.Add(new TempoOciosoPessoaDto
+                {
+                    TempoOcioso = (rastreamento.TempoFinalOciosidade - rastreamento.TempoInicialOciosidade).TotalMinutes,
+                    Pessoa = rastreamento.Pessoa
+                });
+            }
+
+            var listaAgrupadaPorPessoa = listaTempoOciosoPessoa.GroupBy(l => l.Pessoa.Id).ToList();
+            var listaFinal = new List<TempoOciosoPessoaDto>();
+            double soma;
+            Pessoa pessoaAtual;
+
+            foreach (var agrupamentoPessoa in listaAgrupadaPorPessoa)
+            {
+                soma = 0;
+                pessoaAtual = null;
+                foreach (var rastreamento in agrupamentoPessoa)
+                {
+                    soma += rastreamento.TempoOcioso;
+                    pessoaAtual = rastreamento.Pessoa;
+                }
+                listaFinal.Add(new TempoOciosoPessoaDto
+                {
+                    TempoOcioso = soma,
+                    Pessoa = pessoaAtual
+                });
+            }
+
+            return Ok(listaFinal);
         }
 
         [HttpGet("Dashboard/PorPessoa")]
