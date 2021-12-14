@@ -56,6 +56,19 @@ namespace backend.Controllers
             }
             return BadRequest();
         }
+
+        [HttpGet("buscar-setor/{idSetor}")]
+        [Authorize]
+        public ActionResult<IEnumerable<Equipe>> GetBySetorId(long idSetor)
+        {
+            if (idSetor > 0)
+            {
+                return equipeService.GetBySetorId(idSetor).ToList();
+            }
+
+            return BadRequest();
+        }
+
         [HttpPost]
         [Authorize]
         public void Post([FromBody] Equipe equipeModel)
