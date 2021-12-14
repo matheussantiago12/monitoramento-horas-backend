@@ -19,5 +19,10 @@ namespace backend.Service.Services
         {
             return _equipeRepository.GetAllLikeNome(nome);
         }
+
+        public IEnumerable<Equipe> GetBySetorId(long idSetor)
+        {
+            return _equipeRepository.GetBySetorId(idSetor);
+        }
     }
 }

@@ -33,7 +33,7 @@ namespace backend.Infra.Data.Repository
         {
             return _dbContext.Set<Equipe>()
                 .Include(e => e.PessoaLider)
-                .Include(e => e.PessoaLider.TipoPessoa)
+                .Include(e => e.PessoaLider.Pessoa.TipoPessoa)
                 .Include(e => e.Setor)
                 .Where(equipe => equipe.SetorId == idSetor)
                 .ToList();
