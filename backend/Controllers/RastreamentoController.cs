@@ -1,5 +1,6 @@
 ﻿using backend.Domain.Entites;
 using backend.Domain.Interfaces;
+using backend.Dtos;
 using backend.Service.Services;
 using backend.Service.Validators;
 using Microsoft.AspNetCore.Authorization;
@@ -77,9 +78,52 @@ namespace backend.Controllers
         }
 
         [HttpGet("Dashboard")]
-        public ActionResult<IEnumerable<Rastreamento>> GetRastreamentoPorPeriodo(DateTime dataInicio, DateTime dataFim)
+        public ActionResult<IEnumerable<RetornoRastreamentoPorPeriodoDto>> GetRastreamentoPorPeriodo(DateTime dataInicio, DateTime dataFim)
         {
-            return _rastreamentoService.GetRastreamentoPorPeriodo(dataInicio, dataFim).ToList();
+            var rastreamentos = _rastreamentoService.GetRastreamentoPorPeriodo(dataInicio, dataFim).ToList();
+            var listaTempoOciosoPessoa = new List<TempoOciosoPessoaDto>();
+
+            foreach (var rastreamento in rastreamentos)
+            {
+                listaTempoOciosoPessoa.Add(new TempoOciosoPessoaDto
+                {
+                    TempoOcioso = (rastreamento.TempoFinalOciosidade - rastreamento.TempoInicialOciosidade).TotalMinutes,
+                    Pessoa = rastreamento.Pessoa
+                });
+            }
+
+            var listaAgrupadaPorSetor = listaTempoOciosoPessoa.GroupBy(l => l.Pessoa.Equipe.SetorId).ToList();
+            var listaFinal = new List<RetornoRastreamentoPorPeriodoDto>();
+            double totalTempoOcioso;
+            double totalPessoas;
+            List<Pessoa> pessoasPercorridas = new List<Pessoa>();
+            Setor setorAtual;
+
+            foreach (var agrupamentoSetor in listaAgrupadaPorSetor)
+            {
+                totalTempoOcioso = 0;
+                totalPessoas = 0;
+                setorAtual = null;
+                pessoasPercorridas.Clear();
+
+                foreach (var pessoa in agrupamentoSetor)
+                {
+                    totalTempoOcioso += pessoa.TempoOcioso;
+                    if (!pessoasPercorridas.Contains(pessoa.Pessoa))
+                    {
+                        totalPessoas++;
+                        pessoasPercorridas.Add(pessoa.Pessoa);
+                    }
+                    setorAtual = pessoa.Pessoa.Equipe.Setor;
+                }
+                listaFinal.Add(new RetornoRastreamentoPorPeriodoDto 
+                { 
+                    MediaMinutosOciosos = totalTempoOcioso / totalPessoas,
+                    Setor = setorAtual
+                });
+            }
+
+            return Ok(listaFinal);
         }
 
         [HttpGet("Dashboard/PorSetor")]
