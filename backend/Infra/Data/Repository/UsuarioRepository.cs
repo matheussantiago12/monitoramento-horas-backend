@@ -39,9 +39,9 @@ namespace backend.Infra.Data.Repository
             return _dbContext.Usuarios.Where(u => u.Pessoa.TipoPessoaId == 2).Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa).Include(u => u.Pessoa.Equipe).Include(u => u.Pessoa.Equipe.PessoaLider).Include(u => u.Pessoa.Equipe.Setor).ToList();
         }
 
-        public IEnumerable<Usuario> GetPorEmail(string email)
+        public Usuario GetPorEmail(string email)
         {
-            return _dbContext.Usuarios.Where(u => u.Email == email).Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa).Include(u => u.Pessoa.Equipe).Include(u => u.Pessoa.Equipe.PessoaLider).Include(u => u.Pessoa.Equipe.Setor);
+            return _dbContext.Usuarios.Where(u => u.Email == email).Include(p => p.Pessoa).Include(p => p.Pessoa.TipoPessoa).Include(u => u.Pessoa.Equipe).Include(u => u.Pessoa.Equipe.PessoaLider).Include(u => u.Pessoa.Equipe.Setor).FirstOrDefault();
         }
 
         public IEnumerable<Usuario> GetByEquipeId(long equipeId)
