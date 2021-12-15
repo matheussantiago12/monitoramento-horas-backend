@@ -13,5 +13,7 @@ namespace backend.Domain.Entites
         [Column("pessoaId")]
         public long PessoaId { get; set; }
         public Pessoa Pessoa { get; set; }
+        [Column("mudar_senha")]
+        public bool MudarSenha { get; set; }
     }
 }

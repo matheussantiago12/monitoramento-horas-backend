@@ -172,6 +172,24 @@ namespace backend.Controllers
             }
         }
 
+        [HttpPut("mudar-senha/{id}")]
+        [Authorize]
+        public void Put(long id, [FromBody] string senha)
+        {
+            if (id <= 0)
+                NotFound();
+
+            if (ModelState.IsValid)
+            {
+                var usuario = usuarioService.Get(id);
+
+                usuario.Senha = senha;
+                usuario.MudarSenha = false;
+
+                usuarioService.Put<UsuarioValidator>(usuario);
+            }
+        }
+
         [HttpDelete("{id}")]
         [Authorize]
         public void Delete(long id)
