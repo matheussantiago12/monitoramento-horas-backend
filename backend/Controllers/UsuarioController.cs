@@ -74,11 +74,11 @@ namespace backend.Controllers
         }
 
         [HttpGet("logado")]
-        public ActionResult<Usuario> GetLogado([FromHeader] string authorization)
+        public ActionResult<UsuarioComPessoaComEquipeSemLiderDto> GetLogado([FromHeader] string authorization)
         {
             var token = authorization.Split(" ");
             var email = TokenService.ObterActor(token[1] ?? authorization);
-            return Ok(usuarioService.GetPorEmail(email));
+            return Ok(new UsuarioComPessoaComEquipeSemLiderDto(usuarioService.GetPorEmail(email)));
         }
 
         [HttpGet("PorNome")]
