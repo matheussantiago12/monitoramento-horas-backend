@@ -161,7 +161,6 @@ namespace backend.Controllers
                 var pessoa = pessoaService.Get(usuario.PessoaId);
 
                 usuario.Email = usuarioModel.Email;
-                usuario.Senha = usuarioModel.Senha;
                 pessoa.Cargo = usuarioModel.Cargo;
                 pessoa.EquipeId = usuarioModel.EquipeId;
                 pessoa.HorasTrabalhoDiario = usuarioModel.CargaHorariaDiaria;
