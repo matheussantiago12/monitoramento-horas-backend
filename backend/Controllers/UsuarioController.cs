@@ -172,7 +172,7 @@ namespace backend.Controllers
             }
         }
 
-        [HttpPut("mudar-senha/{id}")]
+        [HttpPut("trocar-senha/{id}")]
         [Authorize]
         public void Put(long id, [FromBody] string senha)
         {
@@ -183,7 +183,7 @@ namespace backend.Controllers
             {
                 var usuario = usuarioService.Get(id);
 
-                usuario.Senha = senha;
+                usuario.Senha = senha.ToString();
                 usuario.MudarSenha = false;
 
                 usuarioService.Put<UsuarioValidator>(usuario);
